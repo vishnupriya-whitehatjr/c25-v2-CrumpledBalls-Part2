@@ -5,7 +5,9 @@ const Body = Matter.Body;
 //const Render = Matter.Render;
 
 var ground, gameState, engine, world, dustbin, paper;
-
+function preload() {
+  dustbinimg = loadImage("dustbin.png");
+}
 function setup() {
   createCanvas(800, 400);
 
@@ -18,7 +20,7 @@ function setup() {
   Engine.run(engine);
 
   dustbin = new DustBin(720, 390, 100, 10);
-  paper = new Paper(100, 300, 10);
+  paper = new Paper(100, 300, 40);
   ground = Bodies.rectangle(width / 2, 400, width, 10, {
     isStatic: true,
   });
@@ -43,16 +45,19 @@ function draw() {
   if (gameState === "play") {
     rectMode(CENTER);
     background(0);
+
     dustbin.display();
     paper.display();
+    imageMode(CENTER);
+    image(dustbinimg, width - 77, 360, 180, 200);
   }
 }
 
 function keyPressed() {
   if (keyCode === UP_ARROW && gameState === "play") {
     Matter.Body.applyForce(paper.body, paper.body.position, {
-      x: 12,
-      y: -13,
+      x: 50,
+      y: -100,
     });
   }
 }
